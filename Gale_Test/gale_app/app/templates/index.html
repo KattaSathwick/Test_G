@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Test</title>
+  <!-- Bootstrap core CSS -->
+  <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom fonts for this template -->
+  <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+  <!-- Custom styles for this template -->
+  <link href="/static/css/agency.min.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+  <h1 style="text-align:center"> Gale Test </h1> 
+  <!-- Team -->
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+	<form method=POST>
+		{% csrf_token %}
+		<div class="form-group">
+			<input class="form-control" id="url" type="text" placeholder="Provide the URL to crawl *" required="required" data-validation-required-message="Please enter the url to crawl">
+			<p class="help-block text-danger"></p>
+		</div>
+		<div class="form-group">
+			<input class="form-control" id="depth_level" type="number" placeholder="Provide the depth of crawl *" required="required" data-validation-required-message="Please enter the depth of the crawl.">
+			<p class="help-block text-danger"></p>
+		</div>
+		<div class="clearfix"></div>
+		<div class="col-lg-12 text-center">
+			<div id="success"></div>
+				<button id="SubmitButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Submit</button>
+			</div>
+		</div>
+       	</form>
+    </div>
+  </section>
+
+  
+<section>
+	<h2 style="text-align:center;color:blue"> Scraper Requests</h2>
+	<p style="text-align:center"><a href="http://127.0.0.1:8000/gale_mini_app/api/">API</p>
+	<table class="table table-hover">
+		<tr class="headers" id="headers" bgcolor="#b3ffb3">
+			<th style="text-align:center;"> Domain Url </th>
+			<th style="text-align:center;"> No of Images</th>
+		</tr>
+		{% for i in records%}
+		<tr id='tablerows' name='rows' class="table_values" style="text-align:center">
+			<!--td style="text-align:center"> <a href="/gale_mini_app/api/q={{i.requested_url}}/d={{i.dcount}}"/>{{i.requested_url}} </td-->
+			<td style="text-align:center"> <a href="/gale_mini_app/api/q={{i.requested_url}}"> {{i.requested_url}}  </a></td>
+			<td style="text-align:center"> {{i.dcount}} </td>
+		</tr>
+		{% endfor %}
+	</table>
+</section>
+
+
+<section>
+  <h2 style="text-align:center;color:blue"> All images crawled listed below</h2>
+  {% for key, value in final_dict.items %} 
+  <h3 style="text-align:center"> Crawled From : {{key}}</h2>
+   	<div class="row">
+   			{%for image in value%}
+				<div class="column">
+  				<img style="width: 300px; height: 300px" src={{image}} alt="Sample Image" ALIGN=”right" />
+				</div>
+   			{%endfor%}
+   	</div>
+  {% endfor %}
+</section>
+	
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script language="JavaScript" type="text/javascript" src="/static/js/submit_form.js"></script>
+</body>
+
+</html>
